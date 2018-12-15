@@ -29,7 +29,7 @@ namespace WerewolfClient
 
         private bool _isDead;
         private List<Player> players = null;
-		private Form constuctlogin;
+        private Form constuctlogin;
         public MainForm()
         {
             InitializeComponent();
@@ -48,10 +48,10 @@ namespace WerewolfClient
             EnableButton(BtnVote, false);
             _myRole = null;
             _isDead = false;
-			panel1.Visible = false;
+            panel1.Visible = false;
         }
 
-		public void addSignIn(Form login)
+        public void addSignIn(Form login)
         {
             constuctlogin = login;
         }
@@ -82,7 +82,7 @@ namespace WerewolfClient
                 if (player.Name == wm.Player.Name || player.Status != Player.StatusEnum.Alive)
                 {
                     // FIXME, need to optimize this
-                    
+
                     Image img = Properties.Resources.Icon_villager;
                     string role;
                     if (player.Name == wm.Player.Name)
@@ -147,7 +147,7 @@ namespace WerewolfClient
                     }
                     ((Button)Controls["GBPlayers"].Controls["BtnPlayer" + i]).Image = img;
                 }
-                i++;    
+                i++;
             }
         }
         public void Notify(Model m)
@@ -168,8 +168,11 @@ namespace WerewolfClient
                         }
                         else
                         {
-                            MessageBox.Show("You can't join the game, please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            this.Visible = false;
+                            MessageBox.Show("Please Login Your Username Again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            GameFnish.Visible = true;
                         }
+
                         break;
                     case EventEnum.GameStopped:
                         AddChatMessage("Game is finished, outcome is " + wm.EventPayloads["Game.Outcome"]);
@@ -181,13 +184,13 @@ namespace WerewolfClient
                         _myRole = wm.EventPayloads["Player.Role.Name"];
                         AddChatMessage("Your role is " + _myRole + ".");
                         _currentPeriod = Game.PeriodEnum.Night;
-						this.BackColor = Color.FromArgb(34, 36, 49);
-						GBPlayers.ForeColor = Color.White;
-						GBChat.ForeColor = Color.White;
-						GBAction.ForeColor = Color.White;
-						GBStatus.ForeColor = Color.White;
-						label3.ForeColor = Color.White;
-						EnableButton(BtnAction, true);
+                        this.BackColor = Color.FromArgb(34, 36, 49);
+                        GBPlayers.ForeColor = Color.White;
+                        GBChat.ForeColor = Color.White;
+                        GBAction.ForeColor = Color.White;
+                        GBStatus.ForeColor = Color.White;
+                        label3.ForeColor = Color.White;
+                        EnableButton(BtnAction, true);
                         switch (_myRole)
                         {
                             case WerewolfModel.ROLE_PRIEST:
@@ -233,35 +236,35 @@ namespace WerewolfClient
                         AddChatMessage("Switch to day time of day #" + wm.EventPayloads["Game.Current.Day"] + ".");
                         _currentPeriod = Game.PeriodEnum.Day;
                         LBPeriod.Text = "Day time of";
-						this.BackColor = Color.Gainsboro;
-						GBPlayers.ForeColor = Color.Black;
-						GBChat.ForeColor = Color.Black;
-						GBAction.ForeColor = Color.Black;
-						GBStatus.ForeColor = Color.Black;
-						label3.ForeColor = Color.Black;
-						break;
+                        this.BackColor = Color.Gainsboro;
+                        GBPlayers.ForeColor = Color.Black;
+                        GBChat.ForeColor = Color.Black;
+                        GBAction.ForeColor = Color.Black;
+                        GBStatus.ForeColor = Color.Black;
+                        label3.ForeColor = Color.Black;
+                        break;
                     case EventEnum.SwitchToNightTime:
                         AddChatMessage("Switch to night time of day #" + wm.EventPayloads["Game.Current.Day"] + ".");
                         _currentPeriod = Game.PeriodEnum.Night;
                         LBPeriod.Text = "Night time of";
-						this.BackColor = Color.FromArgb(34, 36, 49);
-						GBPlayers.ForeColor = Color.White;
-						GBChat.ForeColor = Color.White;
-						GBAction.ForeColor = Color.White;
-						GBStatus.ForeColor = Color.White;
-						label3.ForeColor = Color.White;
-						//if (wm.Player = WerewolfModel.ROLE_GUNNER)
-						//{
-						//	TbChatInput.Visible = false;
-						//}
+                        this.BackColor = Color.FromArgb(34, 36, 49);
+                        GBPlayers.ForeColor = Color.White;
+                        GBChat.ForeColor = Color.White;
+                        GBAction.ForeColor = Color.White;
+                        GBStatus.ForeColor = Color.White;
+                        label3.ForeColor = Color.White;
+                        //if (wm.Player = WerewolfModel.ROLE_GUNNER)
+                        //{
+                        //	TbChatInput.Visible = false;
+                        //}
 
-						break;
+                        break;
                     case EventEnum.UpdateDay:
                         // TODO  catch parse exception here
                         string tempDay = wm.EventPayloads["Game.Current.Day"];
                         _currentDay = int.Parse(tempDay);
                         LBDay.Text = tempDay;
-						//this.BackColor = Color.Gainsboro;
+                        //this.BackColor = Color.Gainsboro;
                         break;
                     case EventEnum.UpdateTime:
                         string tempTime = wm.EventPayloads["Game.Current.Time"];
@@ -296,7 +299,7 @@ namespace WerewolfClient
                         break;
                     case EventEnum.OtherShotDead:
                         AddChatMessage(wm.EventPayloads["Game.Target.Name"] + " was shot dead by gunner.");
-                        
+
                         break;
                     case EventEnum.Alive:
                         AddChatMessage(wm.EventPayloads["Game.Target.Name"] + " has been revived by medium.");
@@ -331,13 +334,13 @@ namespace WerewolfClient
                             }
                         }
                         break;
-					case EventEnum.SignOut:
-						if (wm.EventPayloads["Success"] == WerewolfModel.TRUE)
-						{
-							constuctlogin.Visible = true;
-							this.Visible = false;
-						}
-						break;
+                    case EventEnum.SignOut:
+                        if (wm.EventPayloads["Success"] == WerewolfModel.TRUE)
+                        {
+                            constuctlogin.Visible = true;
+                            this.Visible = false;
+                        }
+                        break;
                 }
                 // need to reset event
                 wm.Event = EventEnum.NOP;
@@ -401,7 +404,7 @@ namespace WerewolfClient
         private void BtnPlayerX_Click(object sender, EventArgs e)
         {
             Button btnPlayer = (Button)sender;
-            int index = (int) btnPlayer.Tag;
+            int index = (int)btnPlayer.Tag;
             if (players == null)
             {
                 // Nothing to do here;
@@ -422,7 +425,7 @@ namespace WerewolfClient
                 _voteActivated = false;
                 BtnVote.BackColor = Button.DefaultBackColor;
                 AddChatMessage("You vote on " + players[index].Name);
-               // pictureBox2.Visible = true;
+                // pictureBox2.Visible = true;
                 WerewolfCommand wcmd = new WerewolfCommand();
                 wcmd.Action = CommandEnum.Vote;
                 wcmd.Payloads = new Dictionary<string, string>() { { "Target", players[index].Id.ToString() } };
@@ -447,27 +450,27 @@ namespace WerewolfClient
             }
         }
 
-		
 
-		private void label3_Click(object sender, EventArgs e)
-		{
+
+        private void label3_Click(object sender, EventArgs e)
+        {
             this.BackColor = Color.FromArgb(34, 36, 49);
             label3.ForeColor = Color.White;
             panel1.Visible = true;
-		}
-        
-		private void label4_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
+        }
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			this.Close();
+        private void label4_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
 
         }
 
-      
+
         /*private void FullSceen_Click(object sender, EventArgs e)
         {
 
@@ -507,29 +510,29 @@ namespace WerewolfClient
         {
             this.Close();
         }
-        
 
-       /* private void button4_Click(object sender, EventArgs e)
-        {
-            Login login = (Login)constuctlogin;
-            WerewolfCommand wcmd = new WerewolfCommand();
-            wcmd.Action = CommandEnum.SignOut;
-            wcmd.Payloads = new Dictionary<string, string>() { { "Server", login.GetServer() } };
-            controller.ActionPerformed(wcmd);
-            //player.controls.stop();
-            login.Show();
-            this.Hide();
-            BtnJoin.Show();
-            panel1.Visible = false;
-            this.BackColor = Color.Gainsboro;
-            GBPlayers.ForeColor = Color.Black;
-            GBChat.ForeColor = Color.Black;
-            GBAction.ForeColor = Color.Black;
-            GBStatus.ForeColor = Color.Black;
-            label3.ForeColor = Color.Black;
-        }*/
 
-        
+        /* private void button4_Click(object sender, EventArgs e)
+         {
+             Login login = (Login)constuctlogin;
+             WerewolfCommand wcmd = new WerewolfCommand();
+             wcmd.Action = CommandEnum.SignOut;
+             wcmd.Payloads = new Dictionary<string, string>() { { "Server", login.GetServer() } };
+             controller.ActionPerformed(wcmd);
+             //player.controls.stop();
+             login.Show();
+             this.Hide();
+             BtnJoin.Show();
+             panel1.Visible = false;
+             this.BackColor = Color.Gainsboro;
+             GBPlayers.ForeColor = Color.Black;
+             GBChat.ForeColor = Color.Black;
+             GBAction.ForeColor = Color.Black;
+             GBStatus.ForeColor = Color.Black;
+             label3.ForeColor = Color.Black;
+         }*/
+
+
         /*private void TbChatBox_TextChanged(object sender, EventArgs e)
         {
             _MouseDown = true;
@@ -577,18 +580,18 @@ namespace WerewolfClient
             {
                 chatsetup = 1;
             }
-         /*   GBChat.Size = new Size(325, 370);
-            GBChat.Location = new Point(20, 30);
+            /*   GBChat.Size = new Size(325, 370);
+               GBChat.Location = new Point(20, 30);
 
-            TbChatBox.Location = new Point(19, 23);
-            TbChatBox.Size = new Size(284, 299);
+               TbChatBox.Location = new Point(19, 23);
+               TbChatBox.Size = new Size(284, 299);
 
-            TbChatInput.Location = new Point(19, 325);*/
+               TbChatInput.Location = new Point(19, 325);*/
         }
 
         private void TbChatBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if(chatsetup == 2)
+            if (chatsetup == 2)
             {
                 GBChat.Size = new Size(325, 370);
                 GBChat.Location = new Point(20, 30);
@@ -625,6 +628,10 @@ namespace WerewolfClient
         {
 
         }
+
+
+
+
 
 
 

@@ -44,15 +44,15 @@ namespace WerewolfClient
                         }
                         break;
                     case WerewolfModel.EventEnum.SignUp:
-                        if (wm.EventPayloads["Success"] == "true")
+                        if (wm.EventPayloads["Done"] == "True")
                         {
                             //MessageBox.Show("Sign up successfuly, please login", "Success", MessageBoxButtons.OK, MessageBoxIcon.);
-                            MessageBox.Show("Sign Up successfully, Please Login", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Sign Up successfully, Please Login", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
                         else
                         {
-                            MessageBox.Show("Login or password incorrect, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Please Try Another Username", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         break;
                 }

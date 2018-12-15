@@ -585,9 +585,9 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1093, 645);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.GBPlayers);
             this.Controls.Add(this.GameFnish);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.GBPlayers);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
