@@ -127,5 +127,45 @@ namespace WerewolfClient
 		{
 
 		}
-	}
+
+        private void Server_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TBServer_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TbPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TbLogin_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
